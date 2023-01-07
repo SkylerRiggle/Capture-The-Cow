@@ -1,0 +1,3 @@
+C:\Dev\Capture The Cow\Debug\Capture The Cow.exe
+C:\Dev\Capture The Cow\Debug\Capture The Cow.vcxproj.CopyComplete
+C:\Dev\Capture The Cow\Debug\raylib.dll
