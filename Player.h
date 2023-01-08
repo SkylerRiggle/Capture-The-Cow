@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include <corecrt_math.h>
 #include <stdio.h>
+#include "Math.h"
 
 class Player 
 {
@@ -11,6 +12,7 @@ public:
 	{
 		x = startX;
 		y = startY;
+		Image image;
 
 		if (isPlayerOne) 
 		{
@@ -18,10 +20,8 @@ public:
 			down = KEY_S;
 			left = KEY_A;
 			right = KEY_D;
-			beam = KEY_SPACE;
 
-			Image image = LoadImage("assets/p1.png");
-			sprite = LoadTextureFromImage(image);
+			image = LoadImage("assets/p1.png");
 		}
 		else 
 		{
@@ -29,14 +29,13 @@ public:
 			down = KEY_DOWN;
 			left = KEY_LEFT;
 			right = KEY_RIGHT;
-			beam = KEY_KP_ENTER;
 
-			Image image = LoadImage("assets/p2.png");
-			sprite = LoadTextureFromImage(image);
+			image = LoadImage("assets/p2.png");
 		}
 
-		swo = sprite.width / 2;
-		sho = sprite.height / 2;
+		sprite = LoadTextureFromImage(image);
+		swo = sprite.width / 2.0f;
+		sho = sprite.height / 2.0f;
 	}
 
 	void Update(float delta, Player* op) 
@@ -62,8 +61,8 @@ public:
 		} 
 		else 
 		{
-			currentSpeedX = Lerp(currentSpeedX, 0, acc);
-			angle = Lerp(angle, 0, acc);
+			currentSpeedX = Lerp(currentSpeedX, 0.0f, acc);
+			angle = Lerp(angle, 0.0f, acc);
 		}
 
 		if (inputY != 0)
@@ -72,7 +71,7 @@ public:
 		}
 		else
 		{
-			currentSpeedY = Lerp(currentSpeedY, 0, acc);
+			currentSpeedY = Lerp(currentSpeedY, 0.0f, acc);
 		}
 
 		// Movement
@@ -107,18 +106,14 @@ public:
 
 	void DrawEffect(float delta) 
 	{
-		float cosine = cos(delta) * 5;
-		DrawEllipse(x, y + 50, 18 + cosine, 8 + cosine, { 0,0,0,100 });
+		float cosine = cosf(delta) * 5;
+		DrawEllipse((int)x, (int)y + 50, 18 + cosine, 8 + cosine, { 0,0,0,100 });
 	}
 
 	float x = 0, y = 0, currentSpeedX = 0, currentSpeedY = 0;
 private:
-	float maxSpeed = 500, acceleration = 1, swo = 0, sho = 0, angle = 0, colRadius = 30;
-	int up, down, left, right, beam;
+	const float maxSpeed = 500, acceleration = 1, colRadius = 30;
+	float swo = 0, sho = 0, angle = 0;
+	int up, down, left, right;
 	Texture2D sprite;
-
-	float Lerp(float a, float b, float t) 
-	{
-		return a + ((b - a) * t);
-	}
 };
