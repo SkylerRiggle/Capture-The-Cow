@@ -54,8 +54,8 @@ public:
 
 	void Draw()
 	{
-		float speedY = fabs(currentSpeedY);
-		DrawEllipse(x, y + speedY + 5, 0.15f * speedY, 0.09f * speedY, { 0,0,0,100});
+		float speedY = fabsf(currentSpeedY);
+		DrawEllipse((int)x, (int)(y + speedY + 5), 0.15f * speedY, 0.09f * speedY, { 0,0,0,100});
 		DrawTextureRec(sprite, { 0, 0, copysignf(swo * 2, currentSpeedX), sho * 2 }, {x - swo, y - sho}, WHITE);
 	}
 

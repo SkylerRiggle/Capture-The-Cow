@@ -44,5 +44,8 @@
     <ClInclude Include="Goal.h">
       <Filter>Header Files\src</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

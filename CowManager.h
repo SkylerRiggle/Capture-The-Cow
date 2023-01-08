@@ -31,7 +31,7 @@ public:
 		}
 
 		newCow.currentSpeedY = 250;
-		newCow.currentSpeedX = (rand() % 100) - 50;
+		newCow.currentSpeedX = (rand() % 100) - 50.0f;
 		cows.push_back(newCow);
 	}
 	

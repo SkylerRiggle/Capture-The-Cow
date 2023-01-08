@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Beam.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Cow.h" />
     <ClInclude Include="CowManager.h" />
     <ClInclude Include="GameManager.h" />

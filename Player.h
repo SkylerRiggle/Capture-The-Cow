@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raylib.h"
+#include "Beam.h"
 #include <corecrt_math.h>
 #include <stdio.h>
 #include "Math.h"
@@ -22,6 +23,7 @@ public:
 			right = KEY_D;
 
 			image = LoadImage("assets/p1.png");
+			beamColor = RED;
 		}
 		else 
 		{
@@ -31,6 +33,7 @@ public:
 			right = KEY_RIGHT;
 
 			image = LoadImage("assets/p2.png");
+			beamColor = BLUE;
 		}
 
 		sprite = LoadTextureFromImage(image);
@@ -97,16 +100,21 @@ public:
 			(*op).x += (*op).currentSpeedX * delta;
 			(*op).y += (*op).currentSpeedY * delta;
 		}
+
+		// Beam stuff :P
+		beam.Update(x, y + 35, angle);
 	}
 
 	void Draw(float delta)
 	{
-		DrawTextureEx(sprite, { x - swo, y - sho + (cosf(delta) * 5) }, angle, 1, WHITE);
+		float cosine = cosf(delta) * 5;
+		DrawTexturePro(sprite, { 0,0,swo * 2,sho * 2 }, { x,y + cosine,swo * 2,sho * 2 }, { swo,sho }, angle, WHITE);
 	}
 
 	void DrawEffect(float delta) 
 	{
 		float cosine = cosf(delta) * 5;
+		beam.Draw(beamColor, cosine);
 		DrawEllipse((int)x, (int)y + 50, 18 + cosine, 8 + cosine, { 0,0,0,100 });
 	}
 
@@ -116,4 +124,7 @@ private:
 	float swo = 0, sho = 0, angle = 0;
 	int up, down, left, right;
 	Texture2D sprite;
+
+	Beam beam = Beam();
+	Color beamColor = WHITE;
 };
