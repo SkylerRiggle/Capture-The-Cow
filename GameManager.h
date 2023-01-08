@@ -12,6 +12,10 @@ class GameManager
 public:
 	void Run() 
 	{
+		Image image = LoadImage("assets/banner.png");
+		banner = LoadTextureFromImage(image);
+		UnloadImage(image);
+
 		PlayMusicStream(music);
 		float delta = 0;
 
@@ -44,6 +48,7 @@ public:
 
 		currentMatchTime = (float)matchLength;
 		isInGame = true;
+		isPlaying = true;
 	}
 
 	void CloseGame()
@@ -78,23 +83,35 @@ private:
 
     void DrawMenu()
     {
+		DrawTextureEx(banner, { 0,0 }, 0, 0.25, WHITE);
+		DrawText("Capture The Cow!", 42, 92, 62, BLACK);
+		DrawText("Capture The Cow!", 50, 100, 60, WHITE);
 		playButton.Draw();
 		exitButton.Draw();
+		DrawText("Malorie & Skyler Riggle | 2023", 10, 435, 12, WHITE);
     }
 
     void UpdateGame(float delta) 
     {
-		currentMatchTime -= delta;
-
-		if (currentMatchTime <= 0)
+		if (isPlaying) 
 		{
-			currentMatchTime = 0;
+			currentMatchTime -= delta;
+
+			if (currentMatchTime <= 0)
+			{
+				currentMatchTime = 0;
+				isPlaying = false;
+			}
+
+			p1.Update(delta, &p2);
+			p2.Update(delta, &p1);
+
+			cowManager.Update(delta);
 		}
-
-		p1.Update(delta, &p2);
-		p2.Update(delta, &p1);
-
-		cowManager.Update(delta);
+		else if (IsKeyPressed(KEY_R))
+		{
+			InitGame();
+		}
     }
 
     void DrawGame() 
@@ -114,22 +131,40 @@ private:
 		DrawRectangleLines(325, 0, 150, 60, WHITE);
 		DrawText(GetTime(currentMatchTime).c_str(), 365, 10, 40, WHITE);
 
-		DrawRectangle(475, 0, 80, 50, { 255,0,0,50 });
-		DrawRectangleLines(475, 0, 80, 50, RED);
-		DrawText(GetScore(p1Score).c_str(), 485, 10, 40, RED);
+		DrawRectangle(475, 0, 80, 50, { 0,0,255,50 });
+		DrawRectangleLines(475, 0, 80, 50, BLUE);
+		DrawText(GetScore(p2Score).c_str(), 485, 10, 40, BLUE);
 
-		DrawRectangle(245, 0, 80, 50, { 0,0,255,50 });
-		DrawRectangleLines(245, 0, 80, 50, BLUE);
-		DrawText(GetScore(p2Score).c_str(), 270, 10, 40, BLUE);
+		DrawRectangle(245, 0, 80, 50, { 255,0,0,50 });
+		DrawRectangleLines(245, 0, 80, 50, RED);
+		DrawText(GetScore(p1Score).c_str(), 270, 10, 40, RED);
+
+		if (!isPlaying) 
+		{
+			DrawText("GAME OVER!", 175, 100, 75, WHITE);
+			if (p1Score < p2Score) 
+			{
+				DrawText("Player 2 Wins", 200, 175, 30, BLUE);
+			} 
+			else if (p1Score > p2Score) 
+			{
+				DrawText("Player 1 Wins", 200, 175, 30, RED);
+			} 
+			else 
+			{
+				DrawText("Draw", 200, 175, 30, WHITE);
+			}
+			DrawText("Press 'R' to Restart", 200, 210, 30, WHITE);
+		}
     }
 
 	const Music music = LoadMusicStream("assets/music.mp3");
 
 	const Color backgroundColor = Color{ 90, 106, 75, 255 };
-	bool isRunning = true, isInGame = false;
+	bool isRunning = true, isInGame = false, isPlaying = false;
 
-	Button playButton = Button(1, 350, 300);
-	Button exitButton = Button(2, 350, 360);
+	Button playButton = Button(1, 650, 300);
+	Button exitButton = Button(2, 650, 360);
 
 	CowManager cowManager = CowManager();
 
@@ -139,6 +174,8 @@ private:
 	Goal g1 = Goal(true, 75, 225);
 	Goal g2 = Goal(false, 725, 225);
 	int p1Score = 0, p2Score = 0;
-	float currentMatchTime = 120;
+	float currentMatchTime;
 	const int matchLength = 120; // In seconds
+
+	Texture2D banner;
 };

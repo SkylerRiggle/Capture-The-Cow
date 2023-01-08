@@ -37,6 +37,7 @@ public:
 		}
 
 		sprite = LoadTextureFromImage(image);
+		UnloadImage(image);
 		swo = sprite.width / 2.0f;
 		sho = sprite.height / 2.0f;
 	}

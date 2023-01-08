@@ -29,7 +29,8 @@ public:
 
 		if (mousePos.x >= posX && mousePos.x <= posX + 100 && mousePos.y >= posY && mousePos.y <= posY + 50) 
 		{
-			color = { 255,255,255,100 };
+			color = BLACK;
+			bg = WHITE;
 
 			if (IsMouseButtonPressed(0)) 
 			{
@@ -38,7 +39,8 @@ public:
 		}
 		else 
 		{
-			color = { 255,255,255,50 };
+			color = WHITE;
+			bg = BLACK;
 		}
 
 		return -1;
@@ -46,13 +48,14 @@ public:
 
 	void Draw() 
 	{
-		DrawRectangle(posX, posY, 100, 50, color);
-		DrawRectangleLines(posX, posY, 100, 50, WHITE);
-		DrawText(text, posX + 10, posY + 5, 40, BLACK);
+		DrawRectangle(posX, posY, 100, 50, bg);
+		DrawRectangleLines(posX, posY, 100, 50, color);
+		DrawText(text, posX + 10, posY + 5, 40, color);
 	}
 
 private:
 	int id, posX = 0, posY = 0;
-	Color color = { 255,255,255,50 };
+	Color color = WHITE;
+	Color bg = BLACK;
 	const char* text;
 };

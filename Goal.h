@@ -19,6 +19,7 @@ public:
 		posX = x;
 		posY = y;
 		sprite = LoadTextureFromImage(image);
+		UnloadImage(image);
 		swo = sprite.width / 2;
 		sho = sprite.height / 2;
 	}
