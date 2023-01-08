@@ -24,12 +24,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTypes.h">
       <Filter>Header Files\src</Filter>
     </ClInclude>
   </ItemGroup>

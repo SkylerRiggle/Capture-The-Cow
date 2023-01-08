@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "Game.h"
+#include "Scene.h"
 
 int main(void)
 {
@@ -11,20 +11,16 @@ int main(void)
     // Initialize a window and set the game's target fps
     InitWindow(screenWidth, screenHeight, "Capture The Cow");
     SetTargetFPS(60);
-
-    Player redPlayer = Player(PlayerId::P1, 50, 50);
     
     // Main game loop
     while (!WindowShouldClose())
     {
         // Update
-        redPlayer.Update();
 
         // Draw
         BeginDrawing();
             // Clear the background (screen clearing)
             ClearBackground(backgroundColor);
-            redPlayer.Draw();
         EndDrawing();
     }
 
