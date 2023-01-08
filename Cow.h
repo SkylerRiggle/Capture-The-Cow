@@ -38,8 +38,25 @@ public:
 		y = startY;
 	}
 
-	void Update(float delta) 
+	void Update(float delta, Beam* b1, Beam* b2)
 	{
+		float d1 = sqrtf(powf((*b1).x - x, 2) + powf((*b1).y - y, 2));
+		float d2 = sqrtf(powf((*b2).x - x, 2) + powf((*b2).y - y, 2));
+		if (d1 <= range && d1 < d2)
+		{
+			targetSpeedX = force * ((*b1).x - x) / d1;
+			targetSpeedY = force * ((*b1).y - y) / d1;
+		} 
+		else if (d2 <= range)
+		{
+			targetSpeedX = force * ((*b2).x - x) / d2;
+			targetSpeedY = force * ((*b2).y - y) / d2;
+		} else 
+		{
+			targetSpeedX = 0;
+			targetSpeedY = 0;
+		}
+
 		float acc = delta * acceleration;
 		currentSpeedX = Lerp(currentSpeedX, targetSpeedX, acc);
 		currentSpeedY = Lerp(currentSpeedY, targetSpeedY, acc);
@@ -64,6 +81,6 @@ public:
 	int score;
 
 private:
-	float swo = 0, sho = 0, acceleration = 1;
+	float swo = 0, sho = 0, acceleration = 1, range = 50, force = 750;
 	Texture2D sprite;
 };

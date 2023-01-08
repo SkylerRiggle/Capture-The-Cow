@@ -35,7 +35,7 @@ public:
 		cows.push_back(newCow);
 	}
 	
-	void Update(float delta) 
+	void Update(float delta, Beam* b1, Beam* b2)
 	{
 		if (numCows < maxCows && cowTimer >= cowDelay) 
 		{
@@ -50,7 +50,7 @@ public:
 
 		for (size_t index = 0; index < cows.size(); index++)
 		{
-			cows.at(index).Update(delta);
+			cows.at(index).Update(delta, b1, b2);
 		}
 	}
 

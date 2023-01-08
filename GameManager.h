@@ -106,7 +106,9 @@ private:
 			p1.Update(delta, &p2);
 			p2.Update(delta, &p1);
 
-			cowManager.Update(delta);
+			Beam* b1 = &p1.beam;
+			Beam* b2 = &p2.beam;
+			cowManager.Update(delta, b1, b2);
 		}
 		else if (IsKeyPressed(KEY_R))
 		{

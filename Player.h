@@ -120,12 +120,11 @@ public:
 	}
 
 	float x = 0, y = 0, currentSpeedX = 0, currentSpeedY = 0;
+	Beam beam = Beam();
 private:
 	const float maxSpeed = 500, acceleration = 1, colRadius = 30;
 	float swo = 0, sho = 0, angle = 0;
 	int up, down, left, right;
 	Texture2D sprite;
-
-	Beam beam = Beam();
 	Color beamColor = WHITE;
 };
