@@ -57,6 +57,7 @@ public:
 		UnloadMusicStream(music);
 		CloseAudioDevice();
 		CloseWindow();
+		printf("THANKS FOR PLAYING!!!");
 	}
 
 private:
@@ -122,6 +123,7 @@ private:
 		}
 		else if (IsKeyPressed(KEY_R))
 		{
+			cowManager.Reset();
 			InitGame();
 		}
     }

@@ -83,6 +83,13 @@ public:
 		}
 	}
 
+	void Reset() 
+	{
+		cows.clear();
+		numCows = 0;
+		cowTimer = 0;
+	}
+
 private:
 	const float cowDelay = 2;
 	float cowTimer = 0;
