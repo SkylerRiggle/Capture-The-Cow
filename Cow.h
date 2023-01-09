@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "Math.h"
+#include "Goal.h"
 
 class Cow 
 {
@@ -38,10 +39,15 @@ public:
 		y = startY;
 	}
 
-	void Update(float delta, Beam* b1, Beam* b2)
+	int Update(float delta, Beam* b1, Beam* b2, Goal* g1, Goal* g2)
 	{
-		float d1 = sqrtf(powf((*b1).x - x, 2) + powf((*b1).y - y, 2));
-		float d2 = sqrtf(powf((*b2).x - x, 2) + powf((*b2).y - y, 2));
+		float d1 = sqrtf(powf((*g1).x - x, 2) + powf((*g1).y - y, 2));
+		if (d1 <= 50) { return 1; }
+		float d2 = sqrtf(powf((*g2).x - x, 2) + powf((*g2).y - y, 2));
+		if (d2 <= 50) { return 2; }
+
+		d1 = sqrtf(powf((*b1).x - x, 2) + powf((*b1).y - y, 2));
+		d2 = sqrtf(powf((*b2).x - x, 2) + powf((*b2).y - y, 2));
 		if (d1 <= range && d1 < d2)
 		{
 			targetSpeedX = force * ((*b1).x - x) / d1;
@@ -68,6 +74,7 @@ public:
 
 		x += currentSpeedX * delta;
 		y += currentSpeedY * delta;
+		return 0;
 	}
 
 	void Draw()

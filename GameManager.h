@@ -6,6 +6,7 @@
 #include <string>
 #include "Button.h"
 #include "Goal.h"
+#include "Score.h"
 
 class GameManager 
 {
@@ -108,7 +109,16 @@ private:
 
 			Beam* b1 = &p1.beam;
 			Beam* b2 = &p2.beam;
-			cowManager.Update(delta, b1, b2);
+			ScorePackage score = cowManager.Update(delta, b1, b2, &g1, &g2);
+
+			if (score.isPlayerOne) 
+			{
+				p1Score += score.scoreValue;
+			}
+			else 
+			{
+				p2Score += score.scoreValue;
+			}
 		}
 		else if (IsKeyPressed(KEY_R))
 		{

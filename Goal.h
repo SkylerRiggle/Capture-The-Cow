@@ -4,7 +4,7 @@
 class Goal 
 {
 public:
-	Goal(bool isPlayerOne, int x, int y) 
+	Goal(bool isPlayerOne, int newX, int newY) 
 	{
 		Image image;
 		if (isPlayerOne) 
@@ -16,8 +16,8 @@ public:
 			image = LoadImage("assets/bluegoal.png");
 		}
 
-		posX = x;
-		posY = y;
+		x = newX;
+		y = newY;
 		sprite = LoadTextureFromImage(image);
 		UnloadImage(image);
 		swo = sprite.width / 2;
@@ -26,10 +26,11 @@ public:
 
 	void Draw() 
 	{
-		DrawTexture(sprite, posX - swo, posY - sho, WHITE);
+		DrawTexture(sprite, x - swo, y - sho, WHITE);
 	}
 
+	int x, y;
 private:
-	int posX, posY, swo, sho;
+	int swo, sho;
 	Texture2D sprite;
 };

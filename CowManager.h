@@ -2,6 +2,8 @@
 
 #include "Cow.h"
 #include <vector>
+#include "Goal.h"
+#include "Score.h"
 
 class CowManager 
 {
@@ -35,7 +37,7 @@ public:
 		cows.push_back(newCow);
 	}
 	
-	void Update(float delta, Beam* b1, Beam* b2)
+	ScorePackage Update(float delta, Beam* b1, Beam* b2, Goal* g1, Goal* g2)
 	{
 		if (numCows < maxCows && cowTimer >= cowDelay) 
 		{
@@ -48,10 +50,29 @@ public:
 			cowTimer += delta;
 		}
 
+		ScorePackage returnValue{ true, 0 };
 		for (size_t index = 0; index < cows.size(); index++)
 		{
-			cows.at(index).Update(delta, b1, b2);
+			Cow* cow = &cows.at(index);
+			int result = (*cow).Update(delta, b1, b2, g1, g2);
+			if (result != 0) 
+			{
+				if (result == 1) 
+				{
+					returnValue.isPlayerOne = true;
+				}
+				else if (result == 2)
+				{
+					returnValue.isPlayerOne = false;
+				}
+
+				returnValue.scoreValue = cow->score;
+				cows.erase(cows.begin() + index);
+				numCows--;
+			}
 		}
+
+		return returnValue;
 	}
 
 	void Draw() 
